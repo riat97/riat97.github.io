@@ -1,20 +1,256 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
-    <title>riat97</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Riat97 - Security Researcher</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #0d1117;
-            color: white;
-            text-align: center;
-            padding: 50px;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        h1 { color: #ff7b72; }
+        
+        body {
+            font-family: 'Courier New', monospace;
+            background: #0d1117;
+            color: #c9d1d9;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* CABEÇALHO */
+        header {
+            background: #161b22;
+            padding: 2rem 0;
+            text-align: center;
+            border-bottom: 3px solid #ff7b72;
+        }
+        
+        h1 {
+            color: #ff7b72;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: #8b949e;
+        }
+        
+        /* SEÇÕES */
+        .section {
+            padding: 3rem 0;
+            border-bottom: 1px solid #21262d;
+        }
+        
+        h2 {
+            color: #ff7b72;
+            margin-bottom: 2rem;
+            font-size: 1.8rem;
+        }
+        
+        /* CARDS DE COMPETÊNCIAS */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .skill-card {
+            background: #161b22;
+            padding: 1.5rem;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+        }
+        
+        .skill-card h3 {
+            color: #58a6ff;
+            margin-bottom: 1rem;
+        }
+        
+        /* TESTES DE SEGURANÇA */
+        .test-area {
+            background: #161b22;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+        }
+        
+        input, button {
+            padding: 10px 15px;
+            margin: 10px 5px;
+            background: #21262d;
+            border: 1px solid #30363d;
+            color: white;
+            font-family: 'Courier New', monospace;
+            border-radius: 4px;
+        }
+        
+        button {
+            background: #ff7b72;
+            color: black;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        button:hover {
+            background: #ff6b61;
+        }
+        
+        code {
+            background: #21262d;
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: #ff7b72;
+        }
+        
+        /* RODAPÉ */
+        footer {
+            background: #161b22;
+            padding: 2rem 0;
+            text-align: center;
+            color: #8b949e;
+        }
     </style>
 </head>
 <body>
-    <p>Estudante de Segurança da Informação</p>
-    <p>Site em construção...</p>
+    <!-- CABEÇALHO -->
+    <header>
+        <div class="container">
+            <h1>Riat97</h1>
+            <p class="subtitle">Security Researcher | Ethical Hacker</p>
+            <p>Estudante de Segurança da Informação</p>
+        </div>
+    </header>
+
+    <!-- SEÇÃO SOBRE -->
+    <section class="section">
+        <div class="container">
+            <h2>👨‍💻 Sobre Mim</h2>
+            <p>Sou estudante de Segurança da Informação com foco em ethical hacking, pentest e análise de vulnerabilidades.</p>
+            <p>Atualmente desenvolvendo habilidades em segurança ofensiva e defensiva.</p>
+        </div>
+    </section>
+
+    <!-- SEÇÃO COMPETÊNCIAS -->
+    <section class="section">
+        <div class="container">
+            <h2>🛠️ Competências Técnicas</h2>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <h3>🔒 Segurança</h3>
+                    <p>Segurança da Informação</p>
+                    <p>Ethical Hacking</p>
+                    <p>OWASP Top 10</p>
+                </div>
+                
+                <div class="skill-card">
+                    <h3>🔧 Ferramentas</h3>
+                    <p>Burp Suite</p>
+                    <p>Nmap</p>
+                    <p>Wireshark</p>
+                    <p>Kali Linux</p>
+                </div>
+                
+                <div class="skill-card">
+                    <h3>💻 Tecnologias</h3>
+                    <p>Linux</p>
+                    <p>Redes</p>
+                    <p>Python</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LABORATÓRIO DE SEGURANÇA -->
+    <section class="section">
+        <div class="container">
+            <h2>🧪 Laboratório de Segurança</h2>
+            
+            <!-- TESTE XSS -->
+            <div class="test-area">
+                <h3>🚨 Teste XSS (Vulnerável)</h3>
+                <p>Tente: <code>&lt;script&gt;alert('XSS')&lt;/script&gt;</code></p>
+                <input type="text" id="xssInput" placeholder="Digite payload XSS...">
+                <button onclick="testarXSS()">Executar XSS</button>
+                <div id="xssResult"></div>
+            </div>
+            
+            <!-- TESTE SQL INJECTION -->
+            <div class="test-area">
+                <h3>🗃️ Teste SQL Injection</h3>
+                <p>Tente: <code>' OR '1'='1</code></p>
+                <input type="text" id="sqlInput" placeholder="Digite payload SQL...">
+                <button onclick="testarSQL()">Testar SQL Injection</button>
+                <div id="sqlResult"></div>
+            </div>
+            
+            <!-- TESTE COOKIES -->
+            <div class="test-area">
+                <h3>🍪 Teste de Cookies</h3>
+                <button onclick="criarCookieInseguro()">Criar Cookie Inseguro</button>
+                <button onclick="verCookies()">Ver Cookies</button>
+                <button onclick="limparCookies()">Limpar Cookies</button>
+                <div id="cookieResult"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- RODAPÉ -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Riat97 - Portfólio de Segurança</p>
+            <p>🚀 Site para estudos e testes de segurança</p>
+        </div>
+    </footer>
+
+    <script>
+        // TESTE XSS VULNERÁVEL (PROPOSITAL)
+        function testarXSS() {
+            const input = document.getElementById('xssInput').value;
+            // VULNERÁVEL - sem sanitização
+            document.getElementById('xssResult').innerHTML = 
+                `<strong>Resultado:</strong> <span style="color: #ff7b72">${input}</span>`;
+        }
+        
+        // TESTE SQL INJECTION
+        function testarSQL() {
+            const input = document.getElementById('sqlInput').value;
+            if (input.includes("' OR '1'='1") || input.includes("' OR 1=1--")) {
+                document.getElementById('sqlResult').innerHTML = 
+                    "🚨 <strong>VULNERÁVEL!</strong> SQL Injection detectado!";
+            } else {
+                document.getElementById('sqlResult').innerHTML = 
+                    "✅ <strong>Input seguro</strong> - Nenhum SQL Injection detectado";
+            }
+        }
+        
+        // TESTE COOKIES
+        function criarCookieInseguro() {
+            document.cookie = "usuario=riat97; path=/";
+            document.cookie = "senha=123456; path=/"; // INSECURO!
+            verCookies();
+        }
+        
+        function verCookies() {
+            document.getElementById('cookieResult').innerHTML = 
+                `<strong>Cookies atuais:</strong><br><code>${document.cookie || 'Nenhum cookie'}</code>`;
+        }
+        
+        function limparCookies() {
+            document.cookie.split(";").forEach(function(c) {
+                document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+            });
+            verCookies();
+        }
+    </script>
 </body>
 </html>
