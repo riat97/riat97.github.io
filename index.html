@@ -204,7 +204,7 @@
             
             <!-- TESTE XSS MELHORADO -->
             <div class="test-area">
-                <h3>Teste XSS</h3>
+                <h3> Teste XSS (Vulnerável)</h3>
                 
                 <div class="sql-section">
                     <h4>XSS Refletido</h4>
@@ -233,18 +233,18 @@
             
             <!-- LABORATÓRIO SQL INJECTION -->
             <div class="test-area">
-                <h3>Laboratório SQL Injection</h3>
+                <h3> Laboratório SQL Injection</h3>
                 
                 <div class="sql-section">
-                    <h4>Simulação de Login</h4>
+                    <h4>🔐 Simulação de Login (Vulnerável)</h4>
                     <input type="text" id="username" placeholder="Usuário" style="width: 200px;">
                     <input type="password" id="password" placeholder="Senha" style="width: 200px;">
                     <button onclick="testLogin()">Fazer Login</button>
-                    <div id="loginResult"></div>
+                    <div id="loginResult" style="margin-top: 1rem;"></div>
                 </div>
 
                 <div class="sql-section">
-                    <h4>Payloads para Testar:</h4>
+                    <h4>🧪 Payloads para Testar:</h4>
                     <div class="payload-buttons">
                         <button class="payload-btn" onclick="injectPayload('\' OR \'1\'=\'1')">' OR '1'='1</button>
                         <button class="payload-btn" onclick="injectPayload('admin\' --')">admin' --</button>
@@ -323,7 +323,8 @@
             if (username.includes("' OR '1'='1") || username.includes("' OR 1=1--") || username.includes("' --")) {
                 document.getElementById('loginResult').innerHTML += `
                     <div style="background: #4b0082; padding: 1rem; border-radius: 5px; margin: 10px 0;">
-                        <strong>SQL INJECTION DETECTADO!</strong><br>
+                        <strong>🚨 SQL INJECTION DETECTADO!</strong><br>
+                        <strong>Resultado:</strong> Acesso concedido a TODOS os usuários!<br>
                         <strong>Usuários vazados:</strong><br>
                         ${users.map(user => `• ${user.username} (${user.role})`).join('<br>')}
                     </div>
@@ -333,14 +334,14 @@
                 if (user) {
                     document.getElementById('loginResult').innerHTML += `
                         <div style="background: #0d1f0d; padding: 1rem; border-radius: 5px; border: 1px solid #32cd32;">
-                            <strong>LOGIN BEM-SUCEDIDO</strong><br>
+                            <strong>✅ LOGIN BEM-SUCEDIDO</strong><br>
                             Bem-vindo, ${user.username}! (${user.role})
                         </div>
                     `;
                 } else {
                     document.getElementById('loginResult').innerHTML += `
                         <div style="background: #0d1f0d; padding: 1rem; border-radius: 5px; border: 1px solid #4b0082;">
-                            <strong>LOGIN FALHOU</strong><br>
+                            <strong>❌ LOGIN FALHOU</strong><br>
                             Usuário ou senha incorretos
                         </div>
                     `;
