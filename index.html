@@ -112,6 +112,26 @@
             color: #ff7b72;
         }
         
+        /* ESTILOS ESPECÍFICOS DO SQL INJECTION */
+        .sql-section {
+            background: #1a1f29;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 5px;
+        }
+        
+        .payload-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .payload-btn {
+            font-size: 0.8rem;
+            padding: 8px;
+        }
+        
         /* RODAPÉ */
         footer {
             background: #161b22;
@@ -184,40 +204,39 @@
                 <div id="xssResult"></div>
             </div>
             
-    
-     <!-- 🗃️ TESTE SQL INJECTION -->
-<div class="test-area">
-    <h3>🗃️ Laboratório SQL Injection</h3>
-    
-    <!-- SIMULAÇÃO DE LOGIN -->
-    <div style="background: #1a1f29; padding: 1rem; margin: 1rem 0; border-radius: 5px;">
-        <h4>🔐 Simulação de Login (Vulnerável)</h4>
-        <p><strong>Usuários de teste:</strong> admin | user | guest</p>
-        <input type="text" id="username" placeholder="Usuário" style="width: 200px;">
-        <input type="password" id="password" placeholder="Senha" style="width: 200px;">
-        <button onclick="testLogin()">Fazer Login</button>
-        <div id="loginResult" style="margin-top: 1rem;"></div>
-    </div>
+            <!-- LABORATÓRIO SQL INJECTION COMPLETO -->
+            <div class="test-area">
+                <h3>🗃️ Laboratório SQL Injection</h3>
+                
+                <!-- SIMULAÇÃO DE LOGIN -->
+                <div class="sql-section">
+                    <h4>🔐 Simulação de Login (Vulnerável)</h4>
+                    <p><strong>Usuários de teste:</strong> admin | user | guest</p>
+                    <input type="text" id="username" placeholder="Usuário" style="width: 200px;">
+                    <input type="password" id="password" placeholder="Senha" style="width: 200px;">
+                    <button onclick="testLogin()">Fazer Login</button>
+                    <div id="loginResult" style="margin-top: 1rem;"></div>
+                </div>
 
-    <!-- PAYLOADS PARA TESTAR -->
-    <div style="background: #1a1f29; padding: 1rem; margin: 1rem 0; border-radius: 5px;">
-        <h4>🧪 Payloads para Testar:</h4>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px;">
-            <button onclick="injectPayload('\' OR \'1\'=\'1')" style="font-size: 0.8rem;">' OR '1'='1</button>
-            <button onclick="injectPayload('admin\' --')" style="font-size: 0.8rem;">admin' --</button>
-            <button onclick="injectPayload('\' OR 1=1--')" style="font-size: 0.8rem;">' OR 1=1--</button>
-            <button onclick="injectPayload('\' UNION SELECT 1,2,3--')" style="font-size: 0.8rem;">' UNION SELECT 1,2,3--</button>
-        </div>
-    </div>
+                <!-- PAYLOADS PARA TESTAR -->
+                <div class="sql-section">
+                    <h4>🧪 Payloads para Testar:</h4>
+                    <div class="payload-buttons">
+                        <button class="payload-btn" onclick="injectPayload('\' OR \'1\'=\'1')">' OR '1'='1</button>
+                        <button class="payload-btn" onclick="injectPayload('admin\' --')">admin' --</button>
+                        <button class="payload-btn" onclick="injectPayload('\' OR 1=1--')">' OR 1=1--</button>
+                        <button class="payload-btn" onclick="injectPayload('\' UNION SELECT 1,2,3--')">' UNION SELECT 1,2,3--</button>
+                    </div>
+                </div>
 
-    <!-- EXPLICAÇÃO DAS VULNERABILIDADES -->
-    <div style="background: #1a1f29; padding: 1rem; margin: 1rem 0; border-radius: 5px;">
-        <h4>📚 Como Funciona SQL Injection:</h4>
-        <p><strong>Query Original:</strong> <code>SELECT * FROM users WHERE username = '[input]' AND password = '[input]'</code></p>
-        <p><strong>Com Injection:</strong> <code>SELECT * FROM users WHERE username = '' OR '1'='1' AND password = 'qualquer'</code></p>
-        <p>→ <strong>Resultado:</strong> Retorna TODOS os usuários!</p>
-    </div>
-</div>
+                <!-- EXPLICAÇÃO -->
+                <div class="sql-section">
+                    <h4>📚 Como Funciona SQL Injection:</h4>
+                    <p><strong>Query Original:</strong> <code>SELECT * FROM users WHERE username = '[input]' AND password = '[input]'</code></p>
+                    <p><strong>Com Injection:</strong> <code>SELECT * FROM users WHERE username = '' OR '1'='1' AND password = 'qualquer'</code></p>
+                    <p>→ <strong>Resultado:</strong> Retorna TODOS os usuários!</p>
+                </div>
+            </div>
             
             <!-- TESTE COOKIES -->
             <div class="test-area">
@@ -239,7 +258,7 @@
     </footer>
 
     <script>
-        // TESTE XSS VULNERÁVEL (PROPOSITAL)
+        // ========== TESTE XSS ==========
         function testarXSS() {
             const input = document.getElementById('xssInput').value;
             // VULNERÁVEL - sem sanitização
@@ -247,78 +266,67 @@
                 `<strong>Resultado:</strong> <span style="color: #ff7b72">${input}</span>`;
         }
         
-        // TESTE SQL INJECTION
-        function testarSQL() {
-            const input = document.getElementById('sqlInput').value;
-            if (input.includes("' OR '1'='1") || input.includes("' OR 1=1--")) {
-                document.getElementById('sqlResult').innerHTML = 
-                    "🚨 <strong>VULNERÁVEL!</strong> SQL Injection detectado!";
+        // ========== SQL INJECTION ==========
+        // SIMULAÇÃO DE BANCO DE DADOS
+        const users = [
+            { username: 'admin', password: 'admin123', role: 'Administrador' },
+            { username: 'user', password: 'user123', role: 'Usuário Normal' },
+            { username: 'guest', password: 'guest123', role: 'Convidado' }
+        ];
+
+        // FUNÇÃO DE LOGIN VULNERÁVEL
+        function testLogin() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            // SIMULA QUERY SQL VULNERÁVEL
+            let query = `SELECT * FROM users WHERE username = '${username}' AND password = '${password}'`;
+            
+            document.getElementById('loginResult').innerHTML = `
+                <div style="background: #21262d; padding: 1rem; border-radius: 5px; margin: 10px 0;">
+                    <strong>Query Executada:</strong><br>
+                    <code style="color: #ff7b72;">${query}</code>
+                </div>
+            `;
+            
+            // DETECTA SQL INJECTION
+            if (username.includes("' OR '1'='1") || username.includes("' OR 1=1--") || username.includes("' --")) {
+                document.getElementById('loginResult').innerHTML += `
+                    <div style="background: #da3633; padding: 1rem; border-radius: 5px; margin: 10px 0;">
+                        <strong>🚨 SQL INJECTION DETECTADO!</strong><br>
+                        <strong>Resultado:</strong> Acesso concedido a TODOS os usuários!<br>
+                        <strong>Usuários vazados:</strong><br>
+                        ${users.map(user => `• ${user.username} (${user.role})`).join('<br>')}
+                    </div>
+                `;
             } else {
-                document.getElementById('sqlResult').innerHTML = 
-                    "✅ <strong>Input seguro</strong> - Nenhum SQL Injection detectado";
+                // VERIFICA LOGIN NORMAL
+                const user = users.find(u => u.username === username && u.password === password);
+                if (user) {
+                    document.getElementById('loginResult').innerHTML += `
+                        <div style="background: #238636; padding: 1rem; border-radius: 5px;">
+                            <strong>✅ LOGIN BEM-SUCEDIDO</strong><br>
+                            Bem-vindo, ${user.username}! (${user.role})
+                        </div>
+                    `;
+                } else {
+                    document.getElementById('loginResult').innerHTML += `
+                        <div style="background: #da3633; padding: 1rem; border-radius: 5px;">
+                            <strong>❌ LOGIN FALHOU</strong><br>
+                            Usuário ou senha incorretos
+                        </div>
+                    `;
+                }
             }
         }
 
-        // SIMULAÇÃO DE BANCO DE DADOS
-const users = [
-    { username: 'admin', password: 'admin123', role: 'Administrador' },
-    { username: 'user', password: 'user123', role: 'Usuário Normal' },
-    { username: 'guest', password: 'guest123', role: 'Convidado' }
-];
-
-// FUNÇÃO DE LOGIN VULNERÁVEL
-function testLogin() {
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
-    
-    // SIMULA QUERY SQL VULNERÁVEL
-    let query = `SELECT * FROM users WHERE username = '${username}' AND password = '${password}'`;
-    
-    document.getElementById('loginResult').innerHTML = `
-        <div style="background: #21262d; padding: 1rem; border-radius: 5px; margin: 10px 0;">
-            <strong>Query Executada:</strong><br>
-            <code style="color: #ff7b72;">${query}</code>
-        </div>
-    `;
-    
-    // DETECTA SQL INJECTION
-    if (username.includes("' OR '1'='1") || username.includes("' OR 1=1--") || username.includes("' --")) {
-        document.getElementById('loginResult').innerHTML += `
-            <div style="background: #da3633; padding: 1rem; border-radius: 5px; margin: 10px 0;">
-                <strong>🚨 SQL INJECTION DETECTADO!</strong><br>
-                <strong>Resultado:</strong> Acesso concedido a TODOS os usuários!<br>
-                <strong>Usuários vazados:</strong><br>
-                ${users.map(user => `• ${user.username} (${user.role})`).join('<br>')}
-            </div>
-        `;
-    } else {
-        // VERIFICA LOGIN NORMAL
-        const user = users.find(u => u.username === username && u.password === password);
-        if (user) {
-            document.getElementById('loginResult').innerHTML += `
-                <div style="background: #238636; padding: 1rem; border-radius: 5px;">
-                    <strong>✅ LOGIN BEM-SUCEDIDO</strong><br>
-                    Bem-vindo, ${user.username}! (${user.role})
-                </div>
-            `;
-        } else {
-            document.getElementById('loginResult').innerHTML += `
-                <div style="background: #da3633; padding: 1rem; border-radius: 5px;">
-                    <strong>❌ LOGIN FALHOU</strong><br>
-                    Usuário ou senha incorretos
-                </div>
-            `;
+        // FUNÇÃO PARA INJECTAR PAYLOADS
+        function injectPayload(payload) {
+            document.getElementById('username').value = payload;
+            document.getElementById('password').value = 'qualquer';
         }
-    }
-}
-
-// FUNÇÃO PARA INJECTAR PAYLOADS
-function injectPayload(payload) {
-    document.getElementById('username').value = payload;
-    document.getElementById('password').value = 'qualquer';
-}
         
-        // TESTE COOKIES
+        // ========== TESTE COOKIES ==========
         function criarCookieInseguro() {
             document.cookie = "usuario=riat97; path=/";
             document.cookie = "senha=123456; path=/"; // INSECURO!
