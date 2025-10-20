@@ -26,14 +26,14 @@
         
         /* CABEÇALHO */
         header {
-            background: #0d1f0d; /* VERDE MAIS ESCURO */
+            background: #0d1f0d;
             padding: 2rem 0;
             text-align: center;
-            border-bottom: 3px solid #4b0082; /* ROXO MAIS ESCURO */
+            border-bottom: 3px solid #4b0082;
         }
         
         h1 {
-            color: #4b0082; /* ROXO MAIS ESCURO */
+            color: #4b0082;
             font-size: 2.5rem;
             margin-bottom: 1rem;
         }
@@ -50,7 +50,7 @@
         }
         
         h2 {
-            color: #4b0082; /* ROXO MAIS ESCURO */
+            color: #4b0082;
             margin-bottom: 2rem;
             font-size: 1.8rem;
         }
@@ -64,9 +64,9 @@
         }
         
         .skill-card {
-            background: #0d1f0d; /* VERDE MAIS ESCURO */
+            background: #0d1f0d;
             padding: 1.5rem;
-            border: 1px solid #4b0082; /* ROXO MAIS ESCURO */
+            border: 1px solid #4b0082;
             border-radius: 8px;
         }
         
@@ -77,32 +77,32 @@
         
         /* TESTES DE SEGURANÇA */
         .test-area {
-            background: #0d1f0d; /* VERDE MAIS ESCURO */
+            background: #0d1f0d;
             padding: 2rem;
             margin: 2rem 0;
-            border: 1px solid #4b0082; /* ROXO MAIS ESCURO */
+            border: 1px solid #4b0082;
             border-radius: 8px;
         }
         
         input, button {
             padding: 10px 15px;
             margin: 10px 5px;
-            background: #0d1f0d; /* VERDE MAIS ESCURO */
-            border: 1px solid #4b0082; /* ROXO MAIS ESCURO */
+            background: #0d1f0d;
+            border: 1px solid #4b0082;
             color: white;
             font-family: 'Courier New', monospace;
             border-radius: 4px;
         }
         
         button {
-            background: #4b0082; /* ROXO MAIS ESCURO */
+            background: #4b0082;
             color: white;
             cursor: pointer;
             font-weight: bold;
         }
         
         button:hover {
-            background: #5a1192; /* ROXO UM POUCO MAIS CLARO NO HOVER */
+            background: #5a1192;
         }
         
         code {
@@ -112,7 +112,6 @@
             color: #32cd32;
         }
         
-        /* ESTILOS ESPECÍFICOS DO SQL INJECTION */
         .sql-section {
             background: #0d1f0d;
             padding: 1rem;
@@ -140,7 +139,6 @@
             background: #5a1192;
         }
         
-        /* RODAPÉ */
         footer {
             background: #0d1f0d;
             padding: 2rem 0;
@@ -156,7 +154,6 @@
         <div class="container">
             <h1>Ricardo Iatsunik</h1>
             <p class="subtitle">Estudante de Segurança da Informação</p>
-          
         </div>
     </header>
 
@@ -193,7 +190,7 @@
                     <p>Redes</p>
                     <p>Linux</p>
                     <p>Windows</p>
-                    <p>ShellScript
+                    <p>ShellScript</p>
                     <p>Python</p>
                 </div>
             </div>
@@ -205,30 +202,49 @@
         <div class="container">
             <h2>🧪 Laboratório de Segurança</h2>
             
-            <!-- TESTE XSS -->
+            <!-- TESTE XSS MELHORADO -->
             <div class="test-area">
-                <h3> Teste XSS (Vulnerável)</h3>
-                <input type="text" id="xssInput" placeholder="Digite payload XSS...">
-                <button onclick="testarXSS()">Executar XSS</button>
-                <div id="xssResult"></div>
+                <h3>Teste XSS</h3>
+                
+                <div class="sql-section">
+                    <h4>XSS Refletido</h4>
+                    <input type="text" id="xssInput" placeholder="Digite payload XSS..." style="width: 300px;">
+                    <button onclick="testarXSS()">Executar XSS</button>
+                    <div id="xssResult"></div>
+                </div>
+
+                <div class="sql-section">
+                    <h4>XSS Armazenado (Comentários)</h4>
+                    <input type="text" id="commentInput" placeholder="Deixe um comentário..." style="width: 300px;">
+                    <button onclick="addComment()">Adicionar Comentário</button>
+                    <div id="commentsSection"></div>
+                </div>
+
+                <div class="sql-section">
+                    <h4>Payloads XSS para Testar:</h4>
+                    <div class="payload-buttons">
+                        <button class="payload-btn" onclick="loadXSSPayload('<script>alert(\"XSS1\")<\/script>')">Alert Básico</button>
+                        <button class="payload-btn" onclick="loadXSSPayload('<img src=x onerror=alert(\"XSS2\")>')">Image OnError</button>
+                        <button class="payload-btn" onclick="loadXSSPayload('<h1 style=color:red>Site Hackeado</h1>')">HTML Injection</button>
+                        <button class="payload-btn" onclick="loadXSSPayload('<svg onload=alert(\"XSS3\")>')">SVG OnLoad</button>
+                    </div>
+                </div>
             </div>
             
-            <!-- LABORATÓRIO SQL INJECTION COMPLETO -->
+            <!-- LABORATÓRIO SQL INJECTION -->
             <div class="test-area">
-                <h3> Laboratório SQL Injection</h3>
+                <h3>Laboratório SQL Injection</h3>
                 
-                <!-- SIMULAÇÃO DE LOGIN -->
                 <div class="sql-section">
-                    <h4>🔐 Simulação de Login (Vulnerável)</h4>
+                    <h4>Simulação de Login</h4>
                     <input type="text" id="username" placeholder="Usuário" style="width: 200px;">
                     <input type="password" id="password" placeholder="Senha" style="width: 200px;">
                     <button onclick="testLogin()">Fazer Login</button>
-                    <div id="loginResult" style="margin-top: 1rem;"></div>
+                    <div id="loginResult"></div>
                 </div>
 
-                <!-- PAYLOADS PARA TESTAR -->
                 <div class="sql-section">
-                    <h4>🧪 Payloads para Testar:</h4>
+                    <h4>Payloads para Testar:</h4>
                     <div class="payload-buttons">
                         <button class="payload-btn" onclick="injectPayload('\' OR \'1\'=\'1')">' OR '1'='1</button>
                         <button class="payload-btn" onclick="injectPayload('admin\' --')">admin' --</button>
@@ -258,13 +274,32 @@
     </footer>
 
     <script>
-        // ========== TESTE XSS ==========
+        // ========== XSS MELHORADO ==========
+        let comments = [];
+        
         function testarXSS() {
             const input = document.getElementById('xssInput').value;
-            document.getElementById('xssResult').innerHTML = 
-                `<strong>Resultado:</strong> <span style="color: #32cd32">${input}</span>`;
+            document.getElementById('xssResult').innerHTML = input;
         }
         
+        function addComment() {
+            const comment = document.getElementById('commentInput').value;
+            comments.push(comment);
+            updateComments();
+        }
+        
+        function updateComments() {
+            const commentsHTML = comments.map(comment => 
+                `<div style="border: 1px solid #4b0082; padding: 10px; margin: 5px 0; border-radius: 4px;">${comment}</div>`
+            ).join('');
+            document.getElementById('commentsSection').innerHTML = commentsHTML;
+        }
+        
+        function loadXSSPayload(payload) {
+            document.getElementById('xssInput').value = payload;
+            document.getElementById('commentInput').value = payload;
+        }
+
         // ========== SQL INJECTION ==========
         const users = [
             { username: 'admin', password: 'admin123', role: 'Administrador' },
@@ -288,8 +323,7 @@
             if (username.includes("' OR '1'='1") || username.includes("' OR 1=1--") || username.includes("' --")) {
                 document.getElementById('loginResult').innerHTML += `
                     <div style="background: #4b0082; padding: 1rem; border-radius: 5px; margin: 10px 0;">
-                        <strong>🚨 SQL INJECTION DETECTADO!</strong><br>
-                        <strong>Resultado:</strong> Acesso concedido a TODOS os usuários!<br>
+                        <strong>SQL INJECTION DETECTADO!</strong><br>
                         <strong>Usuários vazados:</strong><br>
                         ${users.map(user => `• ${user.username} (${user.role})`).join('<br>')}
                     </div>
@@ -299,14 +333,14 @@
                 if (user) {
                     document.getElementById('loginResult').innerHTML += `
                         <div style="background: #0d1f0d; padding: 1rem; border-radius: 5px; border: 1px solid #32cd32;">
-                            <strong>✅ LOGIN BEM-SUCEDIDO</strong><br>
+                            <strong>LOGIN BEM-SUCEDIDO</strong><br>
                             Bem-vindo, ${user.username}! (${user.role})
                         </div>
                     `;
                 } else {
                     document.getElementById('loginResult').innerHTML += `
                         <div style="background: #0d1f0d; padding: 1rem; border-radius: 5px; border: 1px solid #4b0082;">
-                            <strong>❌ LOGIN FALHOU</strong><br>
+                            <strong>LOGIN FALHOU</strong><br>
                             Usuário ou senha incorretos
                         </div>
                     `;
